@@ -3,7 +3,7 @@ import MainPanel from "./main_panel";
 import {useEffect, useState} from "react";
 import Chart from 'chart.js/auto';
 import {CategoryScale} from 'chart.js';
-import {apiUrl, requestInit, serverUrl} from "./utils";
+import {apiUrl, requestInit} from "./utils";
 
 Chart.register(CategoryScale);
 Chart.defaults.color = 'rgba(255, 255, 255, 0.7)';
@@ -27,11 +27,6 @@ function App() {
         if (month && timeframe === 'month') {
             queryParams = queryParams + `&m=${month}`;
         }
-
-        fetch(`${serverUrl}/data?${queryParams}`, requestInit)
-            .then(response => response.json())
-            // .then(inputData => { setTransactions(inputData.transactions); return inputData })
-            .then(inputData => console.log(inputData));
 
         fetch(`${apiUrl}/exchange_rates`, requestInit)
             .then(response => response.json())
@@ -68,7 +63,7 @@ function App() {
 
 
     useEffect(() => {
-        handleFetch(timeframe, year, month);
+        handleFetch(timeframe, year, month); // eslint-disable-next-line
     }, []);
 
     return (

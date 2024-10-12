@@ -1,7 +1,6 @@
 export const defaultCurrencyCode = 'UAH';
 const currencySymbols = {'UAH': '₴', 'USD': '$', 'EUR': '€'};
 export const apiUrl = 'http://localhost:8000';
-export const serverUrl = 'http://localhost:5000';
 
 export const tooltipOptions = {
     backgroundColor: '#f5f5f5',
