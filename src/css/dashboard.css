@@ -1,0 +1,53 @@
+.income {
+  font-weight: bold;
+  color: #41ad31 !important;
+}
+
+.expense {
+  font-weight: bold;
+  color: #FF6384 !important;
+}
+
+.exchange-rate {
+  color: white
+}
+
+div.contains_table {
+	text-align: right;
+}
+
+div.contains_table table {
+	margin-right: 0;
+	margin-left: auto;
+}
+
+.h4-textsize {
+    font-size: 1.0625rem;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0 !important;
+}
+
+.burn-rate-raw {
+  font-weight: bold;
+    color: rgba(54, 162, 235, 1)
+}
+
+.burn-rate-adjusted {
+  font-weight: bold;
+    color: rgba(255, 99, 132, 1)
+}
+
+span.burn-rate-raw, span.burn-rate-adjusted {
+    padding-left: 5px;
+}
+
+.filterable {
+
+}
+
+.filterable:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
