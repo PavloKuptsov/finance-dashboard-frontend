@@ -10,7 +10,7 @@ Chart.defaults.color = 'rgba(255, 255, 255, 0.7)';
 Chart.defaults.font.family = "'Montserrat', sans-serif";
 
 function App() {
-    const [timeframe, setTimeframe] = useState('year');
+    const [timeframe, setTimeframe] = useState('month');
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth() + 1);
     const [exchangeRates, setExchangeRates] = useState(null);
