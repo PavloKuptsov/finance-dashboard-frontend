@@ -3,8 +3,8 @@ import AverageBurnRateCard from "./average_burn_rate_card";
 
 export default function BurnRatePanel({burnRates}) {
     const labels = Object.keys(burnRates);
-    const raw = Object.values(burnRates).map(item => item.raw_total / item.days);
-    const adjusted = Object.values(burnRates).map(item => item.adjusted_total / item.days);
+    const raw = Object.values(burnRates).map(item => item.raw_total ? item.raw_total / item.days : null);
+    const adjusted = Object.values(burnRates).map(item => item.adjusted_total ? item.adjusted_total / item.days : null);
     const averageRaw = raw.length ? raw.reduce((partialSum, a) => partialSum + a, 0) / raw.length : 0;
     const averageAdjusted = adjusted.length ? adjusted.reduce(
         (partialSum, a) => partialSum + a, 0) / adjusted.length : 0;
