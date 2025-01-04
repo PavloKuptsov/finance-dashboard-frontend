@@ -20,6 +20,7 @@ function App() {
     const [subcategoryAmounts, setSubcategoryAmounts] = useState([]);
     const [categoryAmounts, setCategoryAmounts] = useState([]);
     const [transactions, setTransactions] = useState([]);
+    const [savingsData, setSavingsData] = useState([]);
 
 
     const handleFetch = (timeframe, year, month) => {
@@ -56,6 +57,10 @@ function App() {
             .then(response => response.json())
             .then(inputData => { setTransactions(inputData); return inputData });
 
+        fetch(`${apiUrl}/savings?${queryParams}`, requestInit)
+            .then(response => response.json())
+            .then(inputData => { setSavingsData(inputData); return inputData });
+
         setTimeframe(timeframe);
         setYear(year);
         setMonth(month);
@@ -71,7 +76,8 @@ function App() {
             <Sidebar exchangeRates={exchangeRates} timeframe={timeframe} year={year} month={month}
                      handleFetch={handleFetch} />
             <MainPanel totals={totals} monthlies={monthlies} burnRates={burnRates} categoryAmounts={categoryAmounts}
-                       subcategoryAmounts={subcategoryAmounts} transactions={transactions} exchangeRates={exchangeRates} />
+                       subcategoryAmounts={subcategoryAmounts} transactions={transactions} exchangeRates={exchangeRates}
+                       savingsData={savingsData} />
         </div>
     );
 }
