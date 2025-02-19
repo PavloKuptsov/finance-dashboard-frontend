@@ -1,6 +1,6 @@
 export const defaultCurrencyCode = 'UAH';
 const currencySymbols = {'UAH': '₴', 'USD': '$', 'EUR': '€'};
-export const apiUrl = 'http://192.168.1.3:8000';
+export const apiUrl = 'http://127.0.0.1:8000';
 
 export const tooltipOptions = {
     backgroundColor: '#f5f5f5',
@@ -63,7 +63,7 @@ export function hexToRgbA(hex, opacity){
 }
 
 export function decimalToRgbA(decimal, opacity) {
-    let hexString = '#' + decimal.toString(16);
+    let hexString = '#' + '0'.repeat(6 - decimal.toString(16).length) + decimal.toString(16);
     return hexToRgbA(hexString, opacity);
 }
 
