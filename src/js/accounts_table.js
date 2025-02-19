@@ -1,4 +1,4 @@
-import {accountBalanceInDefaultCurrency, currencySymbol, truncate} from "./utils";
+import {accountBalanceInDefaultCurrency, currencySymbol, decimalToRgbA, truncate} from "./utils";
 
 export default function AccountsTable({ accounts, exchangeRates }) {
     const rows = [];
@@ -42,7 +42,8 @@ function AccountTableRow({account}) {
     const classes = (account.balance >= 0) ? 'text-right income' : 'text-right expense'
     return (
         <tr>
-            <td className="text-primary">{account.name}</td>
+            <td className="text-primary font-weight-bold" style={{ color: decimalToRgbA(account.color, 1) }}
+>{account.name}</td>
             <td className={classes}>{prefix}{truncate(account.balance)}</td>
         </tr>
     )
