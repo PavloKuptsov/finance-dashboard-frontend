@@ -1,9 +1,17 @@
-import Sidebar from "./sidebar";
-import MainPanel from "./main_panel";
 import {useEffect, useState} from "react";
 import Chart from 'chart.js/auto';
 import {CategoryScale} from 'chart.js';
 import {apiUrl, requestInit} from "./utils";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import DatePicker from "./datepicker";
+import CashflowPanel from "./cashflow_panel";
+import BurnRatePanel from "./burn_rate_panel";
+import DailyBalancesPanel from "./daily_balances_panel";
+import SavingsPanel from "./savings_panel";
+import ExpensesPanel from "./expenses_panel";
+import TransactionsPanel from "./transactions_panel";
+import AccountsTablePanel from "./accounts_table_panel";
+import ExchangeRates from "./exchange_rates";
 
 Chart.register(CategoryScale);
 Chart.defaults.color = 'rgba(255, 255, 255, 0.7)';
@@ -13,6 +21,7 @@ function App() {
     const [timeframe, setTimeframe] = useState('month');
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth() + 1);
+    const [accounts, setAccounts] = useState([]);
     const [exchangeRates, setExchangeRates] = useState(null);
     const [totals, setTotals] = useState(null);
     const [monthlies, setMonthlies] = useState({});
@@ -22,6 +31,7 @@ function App() {
     const [transactions, setTransactions] = useState([]);
     const [savingsData, setSavingsData] = useState([]);
     const [dailyBalancesData, setDailyBalancesData] = useState([]);
+    const [accountCashflows, setAccountCashflows] = useState([]);
 
 
     const handleFetch = (timeframe, year, month) => {
@@ -30,9 +40,17 @@ function App() {
             queryParams = queryParams + `&m=${month}`;
         }
 
+        fetch(`${apiUrl}/accounts`, requestInit)
+            .then(response => response.json())
+            .then(inputData => { setAccounts(inputData); return inputData });
+
         fetch(`${apiUrl}/exchange_rates`, requestInit)
             .then(response => response.json())
             .then(inputData => { setExchangeRates(inputData); return inputData });
+
+        fetch(`${apiUrl}/account_cashflows?${queryParams}`, requestInit)
+            .then(response => response.json())
+            .then(inputData => { setAccountCashflows(inputData); return inputData });
 
         fetch(`${apiUrl}/totals?${queryParams}`, requestInit)
             .then(response => response.json())
@@ -71,18 +89,31 @@ function App() {
         setMonth(month);
     }
 
-
     useEffect(() => {
         handleFetch(timeframe, year, month); // eslint-disable-next-line
     }, []);
 
     return (
         <div className="wrapper">
-            <Sidebar exchangeRates={exchangeRates} timeframe={timeframe} year={year} month={month}
-                     handleFetch={handleFetch} />
-            <MainPanel totals={totals} monthlies={monthlies} burnRates={burnRates} categoryAmounts={categoryAmounts}
-                       subcategoryAmounts={subcategoryAmounts} transactions={transactions} exchangeRates={exchangeRates}
-                       savingsData={savingsData} dailyBalancesData={dailyBalancesData}/>
+            <PerfectScrollbar>
+                <div className="main-panel">
+                    <div className="content">
+                        <div className="row header">
+                            <DatePicker timeframe={timeframe} year={year} month={month} handleFetch={handleFetch}/>
+                            <ExchangeRates exchangeRates={exchangeRates}/>
+                        </div>
+                        <div className="row">
+                            <AccountsTablePanel accounts={accounts} exchangeRates={exchangeRates} accountCashflows={accountCashflows} />
+                            <CashflowPanel monthlies={monthlies} totals={totals} exchangeRates={exchangeRates} />
+                        </div>
+                        <BurnRatePanel burnRates={burnRates} />
+                        <DailyBalancesPanel dailyBalancesData={dailyBalancesData} />
+                        <SavingsPanel savingsData={savingsData} />
+                        <ExpensesPanel categoryAmounts={categoryAmounts} subcategoryAmounts={subcategoryAmounts} />
+                        <TransactionsPanel transactions={transactions} />
+                    </div>
+                </div>
+            </PerfectScrollbar>
         </div>
     );
 }

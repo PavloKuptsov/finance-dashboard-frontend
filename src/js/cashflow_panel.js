@@ -53,21 +53,19 @@ export default function CashflowPanel({monthlies, totals, exchangeRates}) {
     }
 
     return (
-        <div className="row">
-            <div className="col-12">
-                <div className="card card-chart">
-                    <div className="card-header">
-                        <div className="row">
-                            <div className="col-sm-6 text-left">
-                                <h2 className="card-title">Cashflow</h2>
-                            </div>
-                            <TotalCashflowCard totals={totals} exchangeRates={exchangeRates}/>
+        <div className="col-lg-6 col-md-12">
+            <div className="card card-chart">
+                <div className="card-header">
+                    <div className="row">
+                        <div className="col-4 text-left">
+                            <h2 className="card-title">Cashflow</h2>
                         </div>
+                        <TotalCashflowCard totals={totals} exchangeRates={exchangeRates}/>
                     </div>
-                    <div className="card-body">
-                        <div className="chart-area">
-                            <Bar data={chartData} options={chartOptions}/>
-                        </div>
+                </div>
+                <div className="card-body">
+                    <div className="chart-area">
+                        <Bar data={chartData} options={chartOptions}/>
                     </div>
                 </div>
             </div>

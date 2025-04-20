@@ -47,15 +47,17 @@ export default function DatePicker({timeframe, year, month, handleFetch}) {
     }
 
     return (
-        <div className="btn-block text-center">
-            <div className="btn-group-sm">
-                <button className="btn btn-sm" id="btn-time-back" onClick={onPrevClick}>
-                    <i className="fas fa-chevron-left"></i>
-                </button>
-                <button className="btn btn-sm" id="btn-timeframe" onClick={onSwitchClick}>{label}</button>
-                <button className="btn btn-sm" id="btn-time-forward" onClick={onNextClick}>
-                    <i className="fas fa-chevron-right"></i>
-                </button>
+        <div className="col-lg-6 col-md-12 text-center">
+            <div className="btn-block text-center">
+                <div className="btn-group-sm">
+                    <button className="btn btn-sm" id="btn-time-back" onClick={onPrevClick}>
+                        <i className="fas fa-chevron-left"></i>
+                    </button>
+                    <button className="btn btn-sm" id="btn-timeframe" onClick={onSwitchClick}>{label}</button>
+                    <button className="btn btn-sm" id="btn-time-forward" onClick={onNextClick}>
+                        <i className="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </div>
     )
