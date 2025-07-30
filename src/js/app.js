@@ -12,6 +12,8 @@ import ExpensesPanel from "./expenses_panel";
 import TransactionsPanel from "./transactions_panel";
 import AccountsTablePanel from "./accounts_table_panel";
 import ExchangeRates from "./exchange_rates";
+import Modal from './modal_component';
+import { useTransactionModal } from './transaction_modal_hook';
 
 Chart.register(CategoryScale);
 Chart.defaults.color = 'rgba(255, 255, 255, 0.7)';
@@ -33,6 +35,14 @@ function App() {
     const [dailyBalancesData, setDailyBalancesData] = useState([]);
     const [accountCashflows, setAccountCashflows] = useState([]);
 
+    const {
+        isModalOpen,
+        transactions: modalTransactions,
+        isLoading,
+        modalTitle,
+        handleCellClick,
+        handleCloseModal
+    } = useTransactionModal();
 
     const handleFetch = (timeframe, year, month) => {
         let queryParams = `y=${year}`
@@ -94,7 +104,7 @@ function App() {
     }, []);
 
     return (
-        <div className="wrapper">
+        <div className="wrapper" onClick={handleCellClick}>
             <PerfectScrollbar>
                 <div className="main-panel">
                     <div className="content">
@@ -110,10 +120,17 @@ function App() {
                         <DailyBalancesPanel dailyBalancesData={dailyBalancesData} />
                         <SavingsPanel savingsData={savingsData} />
                         <ExpensesPanel categoryAmounts={categoryAmounts} subcategoryAmounts={subcategoryAmounts} />
-                        <TransactionsPanel transactions={transactions} />
+                        <TransactionsPanel transactions={transactions} year={year} month={month}/>
                     </div>
                 </div>
             </PerfectScrollbar>
+            
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal}
+                title={isLoading ? 'Loading...' : modalTitle}
+                transactions={modalTransactions}
+            />
         </div>
     );
 }

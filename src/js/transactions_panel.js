@@ -1,12 +1,6 @@
-import {truncate} from "./utils";
+import TransactionsTable from "./transactions_table";
 
-export default function TransactionsPanel({transactions}) {
-    let rows = [];
-    transactions.forEach(transaction => rows.push(
-        <TransactionsTableRow key={transaction.id} transaction={transaction} />)
-    )
-
-
+export default function TransactionsPanel({transactions, year, month}) {
     return (
         <div className="row">
             <div className="col-12">
@@ -15,43 +9,10 @@ export default function TransactionsPanel({transactions}) {
                         <h2 className="card-title">Transactions</h2>
                     </div>
                     <div className="card-body">
-                        <div className="table-responsive">
-                            <table className="table tablesorter" id="transactions-table">
-                                <thead className="text-light">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Account</th>
-                                    <th>Category</th>
-                                    <th>Notes</th>
-                                    <th>Amount</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    { rows }
-                                </tbody>
-                            </table>
-                        </div>
+                        <TransactionsTable transactions={transactions} year={year} month={month}/>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
-
-function TransactionsTableRow({transaction}) {
-    let date = new Date(transaction.date * 1000);
-
-    return (
-        <tr>
-            <td><span className="filterable">{date.toDateString()}</span></td>
-            <td><span className="filterable">{transaction.account ? transaction.account.name : ''}</span></td>
-            <td>
-                <span className="filterable">{transaction.category.name}</span>
-                {transaction.category.parent_category ? <span> &#47; </span> : ''}
-                {transaction.category.parent_category ? <span className="filterable">{transaction.category.parent_category.name}</span> : ''}
-            </td>
-            <td>{transaction.notes}</td>
-            <td>{truncate(transaction.amount)}</td>
-        </tr>
     )
 }
