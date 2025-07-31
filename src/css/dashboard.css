@@ -79,6 +79,7 @@ span.burn-rate-raw, span.burn-rate-adjusted {
     color: white;
     min-width: 800px;
     min-height: 500px;
+    max-height: 1000px;
 }
 
 .modal-header {

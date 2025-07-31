@@ -1,7 +1,7 @@
 import ExpensesSubcategoryPanel from "./expenses_subcategory_panel";
 import ExpensesCategoryPanel from "./expenses_category_panel";
 
-export default function ExpensesPanel({subcategoryAmounts, categoryAmounts, onChartClick, year, month}) {
+export default function ExpensesPanel({subcategoryAmounts, categoryAmounts, onChartClick, year, month, timeframe}) {
     return (
         <div className="row">
             <ExpensesSubcategoryPanel 
@@ -9,12 +9,14 @@ export default function ExpensesPanel({subcategoryAmounts, categoryAmounts, onCh
                 onChartClick={onChartClick}
                 year={year}
                 month={month}
+                timeframe={timeframe}
             />
             <ExpensesCategoryPanel 
                 categoryAmounts={categoryAmounts}
                 onChartClick={onChartClick}
                 year={year}
                 month={month}
+                timeframe={timeframe}
             />
         </div>
     )

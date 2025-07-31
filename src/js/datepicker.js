@@ -42,7 +42,6 @@ export default function DatePicker({timeframe, year, month, handleFetch}) {
             newTimeframe = 'month';
         } else {
             newTimeframe = 'year';
-            month = null;
         }
         handleFetch(newTimeframe, year, month);
     }

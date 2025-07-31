@@ -1,7 +1,7 @@
 import {tooltipOptions, decimalToRgbA} from "./utils";
 import {Doughnut} from "react-chartjs-2";
 
-export default function ExpensesCategoryPanel({categoryAmounts, onChartClick, year, month}) {
+export default function ExpensesCategoryPanel({categoryAmounts, onChartClick, year, month, timeframe}) {
     let labels = [];
     let amounts = [];
     let colors = [];
@@ -25,7 +25,7 @@ export default function ExpensesCategoryPanel({categoryAmounts, onChartClick, ye
 
             // Build query parameters for the API call
             let queryParams = `category_id=${category.id}&y=${year}`;
-            if (month) {
+            if (timeframe === 'month') {
                 queryParams += `&m=${month}`;
             }
 

@@ -110,12 +110,25 @@ function App() {
                 <div className="main-panel">
                     <div className="content">
                         <div className="row header">
-                            <DatePicker timeframe={timeframe} year={year} month={month} handleFetch={handleFetch}/>
+                            <DatePicker
+                                timeframe={timeframe}
+                                year={year}
+                                month={month}
+                                handleFetch={handleFetch}
+                            />
                             <ExchangeRates exchangeRates={exchangeRates}/>
                         </div>
                         <div className="row">
-                            <AccountsTablePanel accounts={accounts} exchangeRates={exchangeRates} accountCashflows={accountCashflows} />
-                            <CashflowPanel monthlies={monthlies} totals={totals} exchangeRates={exchangeRates} />
+                            <AccountsTablePanel
+                                accounts={accounts}
+                                exchangeRates={exchangeRates}
+                                accountCashflows={accountCashflows}
+                            />
+                            <CashflowPanel
+                                monthlies={monthlies}
+                                totals={totals}
+                                exchangeRates={exchangeRates}
+                            />
                         </div>
                         <BurnRatePanel burnRates={burnRates} />
                         <DailyBalancesPanel dailyBalancesData={dailyBalancesData} />
@@ -126,8 +139,14 @@ function App() {
                             onChartClick={handleChartClick}
                             year={year}
                             month={month}
+                            timeframe={timeframe}
                         />
-                        <TransactionsPanel transactions={transactions} year={year} month={month}/>
+                        <TransactionsPanel
+                            transactions={transactions}
+                            year={year}
+                            month={month}
+                            timeframe={timeframe}
+                        />
                     </div>
                 </div>
             </PerfectScrollbar>
@@ -139,6 +158,7 @@ function App() {
                 transactions={modalTransactions}
                 year={year}
                 month={month}
+                timeframe={timeframe}
             />
         </div>
     );

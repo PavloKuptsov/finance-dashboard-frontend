@@ -1,7 +1,7 @@
 import { Bar } from "react-chartjs-2";
 import { decimalToRgbA, tooltipOptions } from "./utils";
 
-function ExpensesSubcategoryPanel({subcategoryAmounts, onChartClick, year, month}) {
+function ExpensesSubcategoryPanel({subcategoryAmounts, onChartClick, year, month, timeframe}) {
     let labels = [];
     let amounts = [];
     let colors = [];
@@ -25,7 +25,7 @@ function ExpensesSubcategoryPanel({subcategoryAmounts, onChartClick, year, month
             
             // Build query parameters for the API call
             let queryParams = `category_id=${subcategory.id}&y=${year}`;
-            if (month) {
+            if (timeframe === 'month') {
                 queryParams += `&m=${month}`;
             }
             
