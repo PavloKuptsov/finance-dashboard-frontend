@@ -29,9 +29,14 @@ export default function TransactionsTable({transactions, year, month}) {
 function TransactionsTableRow({transaction, year, month}) {
     let date = new Date(transaction.date * 1000);
     let date_query = `y=${date.getFullYear()}&m=${date.getMonth() + 1}&d=${date.getDate()}`;
-    let acc_query = `y=${year}&m=${month}&account_id=${transaction.account.id}`;
-    let cat_query = `y=${year}&m=${month}&category_id=${transaction.category.id}`;
-    let parent_cat_query = `y=${year}&m=${month}&category_id=${transaction.category.parent_category_id ? transaction.category.parent_category_id : ''}`
+    let acc_query = `account_id=${transaction.account.id}`;
+    let cat_query = `category_id=${transaction.category.id}&y=${year}`;
+    let parent_cat_query = `category_id=${transaction.category.parent_category_id ? transaction.category.parent_category_id : ''}&y=${year}`
+    if (month){
+        acc_query = acc_query + `&m=${month}`
+        cat_query = cat_query + `&m=${month}`
+        parent_cat_query = parent_cat_query + `&m=${month}`
+    }
 
     return (
         <tr>
