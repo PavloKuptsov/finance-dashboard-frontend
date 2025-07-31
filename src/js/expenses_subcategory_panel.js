@@ -1,19 +1,37 @@
-import {tooltipOptions, decimalToRgbA} from "./utils";
-import {Bar} from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+import { decimalToRgbA, tooltipOptions } from "./utils";
 
-export default function ExpensesSubcategoryPanel({subcategoryAmounts}) {
+function ExpensesSubcategoryPanel({subcategoryAmounts, onChartClick, year, month}) {
     let labels = [];
     let amounts = [];
     let colors = [];
     let borderColors = [];
+    let subcategories = [];
+    
     for (const subcategory_amt of subcategoryAmounts) {
         if (subcategory_amt.amount >= 0) {
             labels.push(subcategory_amt.category.name);
             amounts.push(subcategory_amt.amount);
             colors.push(decimalToRgbA(subcategory_amt.category.color, 0.75));
             borderColors.push(decimalToRgbA(subcategory_amt.category.color, 1));
+            subcategories.push(subcategory_amt.category);
         }
     }
+
+    const handleBarClick = (event, elements) => {
+        if (elements.length > 0 && onChartClick) {
+            const clickedIndex = elements[0].index;
+            const subcategory = subcategories[clickedIndex];
+            
+            // Build query parameters for the API call
+            let queryParams = `category_id=${subcategory.id}&y=${year}`;
+            if (month) {
+                queryParams += `&m=${month}`;
+            }
+            
+            onChartClick(queryParams, subcategory.name);
+        }
+    };
 
     const chartData = {
         labels: labels,
@@ -27,11 +45,13 @@ export default function ExpensesSubcategoryPanel({subcategoryAmounts}) {
             }
         ]
     };
+    
     const chartOptions = {
         indexAxis: 'y',
         aspectRatio: 1,
         responsive: true,
         tooltips: tooltipOptions,
+        onClick: handleBarClick,
         plugins: {
             legend: {
                 display: false
@@ -52,6 +72,9 @@ export default function ExpensesSubcategoryPanel({subcategoryAmounts}) {
                     color: 'rgba(255, 255, 255, 0)'
                 }
             }
+        },
+        onHover: (event, activeElements) => {
+            event.native.target.style.cursor = activeElements.length > 0 ? 'pointer' : 'default';
         }
     };
 
@@ -70,3 +93,5 @@ export default function ExpensesSubcategoryPanel({subcategoryAmounts}) {
         </div>
     )
 }
+
+export default ExpensesSubcategoryPanel;

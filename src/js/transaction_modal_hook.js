@@ -14,10 +14,18 @@ export function useTransactionModal() {
         const queryString = target.getAttribute('data-query');
         if (!queryString) return;
 
+        await fetchAndShowTransactions(queryString, target.textContent.trim());
+    };
+
+    const handleChartClick = async (queryString, title) => {
+        await fetchAndShowTransactions(queryString, title);
+    };
+
+    const fetchAndShowTransactions = async (queryString, title) => {
         try {
             setIsLoading(true);
             
-            // Parse query parameters from data-query attribute
+            // Parse query parameters from query string
             const queryParams = new URLSearchParams(queryString);
             const params = Object.fromEntries(queryParams.entries());
             
@@ -26,12 +34,11 @@ export function useTransactionModal() {
             
             // Update modal state
             setTransactions(transactionData);
-            setModalTitle(`Transactions - ${target.textContent.trim()}`);
+            setModalTitle(`Transactions - ${title}`);
             setIsModalOpen(true);
             
         } catch (error) {
             console.error('Failed to fetch transactions:', error);
-            // You might want to show an error message to the user
             setTransactions([]);
             setModalTitle('Error Loading Transactions');
             setIsModalOpen(true);
@@ -51,6 +58,7 @@ export function useTransactionModal() {
         isLoading,
         modalTitle,
         handleCellClick,
+        handleChartClick,
         handleCloseModal,
         openModal: () => setIsModalOpen(true)
     };

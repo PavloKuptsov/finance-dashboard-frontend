@@ -41,6 +41,7 @@ function App() {
         isLoading,
         modalTitle,
         handleCellClick,
+        handleChartClick,
         handleCloseModal
     } = useTransactionModal();
 
@@ -119,7 +120,13 @@ function App() {
                         <BurnRatePanel burnRates={burnRates} />
                         <DailyBalancesPanel dailyBalancesData={dailyBalancesData} />
                         <SavingsPanel savingsData={savingsData} />
-                        <ExpensesPanel categoryAmounts={categoryAmounts} subcategoryAmounts={subcategoryAmounts} />
+                        <ExpensesPanel 
+                            categoryAmounts={categoryAmounts} 
+                            subcategoryAmounts={subcategoryAmounts}
+                            onChartClick={handleChartClick}
+                            year={year}
+                            month={month}
+                        />
                         <TransactionsPanel transactions={transactions} year={year} month={month}/>
                     </div>
                 </div>
@@ -130,6 +137,8 @@ function App() {
                 onClose={handleCloseModal}
                 title={isLoading ? 'Loading...' : modalTitle}
                 transactions={modalTransactions}
+                year={year}
+                month={month}
             />
         </div>
     );
