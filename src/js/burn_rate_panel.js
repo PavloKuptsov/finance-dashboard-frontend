@@ -1,13 +1,32 @@
 import {Bar} from "react-chartjs-2";
 import AverageBurnRateCard from "./average_burn_rate_card";
 
-export default function BurnRatePanel({burnRates}) {
+export default function BurnRatePanel({burnRates, onChartClick, year, month, timeframe}) {
     const labels = Object.keys(burnRates);
     const raw = Object.values(burnRates).map(item => item.raw_total ? item.raw_total / item.days : null);
     const adjusted = Object.values(burnRates).map(item => item.adjusted_total ? item.adjusted_total / item.days : null);
     const averageRaw = raw.length ? raw.reduce((partialSum, a) => partialSum + a, 0) / raw.length : 0;
     const averageAdjusted = adjusted.length ? adjusted.reduce(
         (partialSum, a) => partialSum + a, 0) / adjusted.length : 0;
+
+    const handleBarClick = (event, elements) => {
+        if (elements.length > 0 && onChartClick) {
+            const clickedElement = elements[0];
+            const clickedIndex = clickedElement.index;
+            const datasetIndex = clickedElement.datasetIndex;
+
+            let queryParams = `y=${year}&m=${month}`;
+            if (timeframe === 'month') {
+                queryParams += `&d=${clickedIndex + 1}`;
+            }
+            if (datasetIndex === 0) {
+                queryParams += `&threshold=4000`;
+            }
+
+            onChartClick(queryParams, clickedIndex);
+        }
+    };
+
     const chartData = {
             labels: labels,
             datasets: [
@@ -29,8 +48,10 @@ export default function BurnRatePanel({burnRates}) {
                 }
             ]
         };
+
     const chartOptions = {
         maintainAspectRatio: false,
+        onClick: handleBarClick,
         plugins: {
             legend: {
                 display: false,

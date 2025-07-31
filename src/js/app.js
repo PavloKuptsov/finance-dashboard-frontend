@@ -130,7 +130,13 @@ function App() {
                                 exchangeRates={exchangeRates}
                             />
                         </div>
-                        <BurnRatePanel burnRates={burnRates} />
+                        <BurnRatePanel
+                            burnRates={burnRates}
+                            onChartClick={handleChartClick}
+                            year={year}
+                            month={month}
+                            timeframe={timeframe}
+                        />
                         <DailyBalancesPanel dailyBalancesData={dailyBalancesData} />
                         <SavingsPanel savingsData={savingsData} />
                         <ExpensesPanel 
