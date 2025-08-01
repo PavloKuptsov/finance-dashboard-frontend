@@ -75,6 +75,9 @@ export default function BurnRatePanel({burnRates, onChartClick, year, month, tim
                     color: 'rgba(255,255,255,0.1)',
                 },
             },
+        },
+        onHover: (event, activeElements) => {
+            event.native.target.style.cursor = activeElements.length > 0 ? 'pointer' : 'default';
         }
     };
 
