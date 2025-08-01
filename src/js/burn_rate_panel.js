@@ -1,5 +1,6 @@
 import {Bar} from "react-chartjs-2";
 import AverageBurnRateCard from "./average_burn_rate_card";
+import {formatDate, formatDateWithoutDay} from "./utils";
 
 export default function BurnRatePanel({burnRates, onChartClick, year, month, timeframe}) {
     const labels = Object.keys(burnRates);
@@ -23,7 +24,16 @@ export default function BurnRatePanel({burnRates, onChartClick, year, month, tim
                 queryParams += `&threshold=4000`;
             }
 
-            onChartClick(queryParams, clickedIndex);
+            let title = '';
+            if (timeframe === 'month') {
+                const title_date = new Date(year, month - 1, clickedIndex + 1);
+                title = formatDate(title_date);
+            } else {
+                const title_date = new Date(year, clickedIndex, 1);
+                title = formatDateWithoutDay(title_date);
+            }
+
+            onChartClick(queryParams, title);
         }
     };
 

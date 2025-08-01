@@ -72,3 +72,18 @@ export function getMonthName(month_num){
         10: 'Oct', 11: 'Nov', 12: 'Dec'}
     return names_short[month_num]
 }
+
+export function formatDate(date) {
+    let month = date.getMonth() + 1;
+    let month_name = getMonthName(month);
+    let day = date.getDate();
+    let year = date.getFullYear();
+    return `${month_name} ${day} ${year}`;
+}
+
+export function formatDateWithoutDay(date) {
+    let month = date.getMonth() + 1;
+    let month_name = getMonthName(month);
+    let year = date.getFullYear();
+    return `${month_name} ${year}`;
+}
